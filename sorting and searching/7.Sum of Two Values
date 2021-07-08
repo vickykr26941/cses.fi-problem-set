@@ -1,0 +1,57 @@
+// https://cses.fi/problemset/task/1640
+#include<bits/stdc++.h> 
+#define int long long
+#define vi vector<int>
+#define vii vector<vi>
+#define pii pair<int,int>
+#define rep(i,a,b) for(int i=a; i<b; i++)
+#define rrep(i,a,b) for(int i=a; i>=b; i--)
+#define pb(i) push_back(i)
+#define all(b) b.begin(),b.end()
+#define ar array 
+using namespace std;
+const int mod = 1e9 + 7;
+const int inf = 1e10 + 20;
+// int ans = inf;
+void test_case(){
+    int n, x; cin>>n>>x;
+    vii a(n,vi(2,0));
+    rep(i,0,n){
+        cin>>a[i][0];
+        a[i][1] = i + 1;
+    }
+ 
+    sort(all(a));
+    int i = 0, j = n - 1;
+    while(i < j){
+        if(a[i][0] + a[j][0] < x){
+            i++;
+        }
+        else if(a[i][0] + a[j][0] > x){
+            j--;
+        }
+        else//(a[i][0] + a[j][0] == x && a[i][1] != a[j][1])
+        {
+            if(a[i][1] > a[j][1]){
+                swap(a[i][1], a[j][1]);
+            }
+            cout<<a[i][1]<<" "<<a[j][1];
+            return;
+        }
+    }
+ 
+    cout<<"IMPOSSIBLE";
+}
+ signed main(){
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
+ 
+ 
+    int t = 1;  //cin>>t;
+    while(t--){
+        test_case();
+        cout<<'\n';
+    }
+    return 0;
+}
