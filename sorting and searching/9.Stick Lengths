@@ -1,0 +1,53 @@
+ // https://cses.fi/problemset/task/1074
+ 
+ #include<bits/stdc++.h> 
+#define int long long
+#define vi vector<int>
+#define vii vector<vi>
+#define pii pair<int,int>
+#define rep(i,a,b) for(int i=a; i<b; i++)
+#define rrep(i,a,b) for(int i=a; i>=b; i--)
+#define pb(i) push_back(i)
+#define all(b) b.begin(),b.end()
+#define ar array 
+using namespace std;
+const int mod = 1e9 + 7;
+const int inf = 1e10 + 20;
+// int ans = inf;
+void test_case(){
+    int n; cin>>n;
+    vi a(n,0);
+    rep(i,0,n){
+        cin>>a[i];
+    }
+    sort(all(a));
+    int val = 0;
+    if(n%2==1){
+        val = a[n/2];
+    }
+    else{
+        val = a[n/2] + a[n/2 - 1];
+        val/=2;
+    }
+ 
+    int ans = 0;
+    rep(i,0,n){
+        ans += abs(val - a[i]);
+    }
+ 
+    cout<<ans;
+}
+ signed main(){
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
+ 
+    int t = 1;  //cin>>t;
+    while(t--){
+        test_case();
+        cout<<'\n';
+    }
+    return 0;
+}
+
+
