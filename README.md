@@ -6,4 +6,4 @@ cses website : https://cses.fi/problemset/
 #### I have adde explanation of solutions those are really hard porblems 
 #### explanation of all solutions will be added soon 
 
-##### will be updated solutions and explanations as will solve problems
+##### will be updated solutions and explanations as i will solve problems
