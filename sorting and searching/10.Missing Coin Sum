@@ -41,7 +41,7 @@ void test_case(){
     int t = 1;  //cin>>t;
     while(t--){
         test_case();
-        cout<<'\n';
+        cout<<'\n'; 
     }
     return 0;
 }
