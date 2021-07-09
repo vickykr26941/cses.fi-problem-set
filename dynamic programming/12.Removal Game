@@ -1,0 +1,68 @@
+//  https://cses.fi/problemset/task/1097
+
+
+#include<bits/stdc++.h>
+#define int long long 
+using namespace std;
+ 
+ 
+  // minimax algorithm
+vector<vector<int>> dp;
+int solve(vector<int>&v,int i,int j,int t){
+  if(i > j) return 0;
+  if(i == j) return v[i];
+  if(t){
+    int x = v[i] + solve(v,i+1,j,t^1);
+    int y = v[j] + solve(v,i,j-1,t^1);
+    return max(x,y);
+  }
+  else{
+    int x = -v[i] + solve(v,i+1,j,t^1);
+    int y = -v[j] + solve(v,i,j-1,t^1);
+    return min(x,y);
+  }
+}
+   // optimal game strategy 
+// int solve(vector<int>&v,int i,int j){
+//   if(i > j) return 0;
+//   else if(dp[i][j] != -1)
+//     return dp[i][j];
+//   // if ith -> mint(f(i+2,j),f(i+1,j-1))
+//   // if jth -> min(f(i,j-2),f(i+1,j-1))
+//   int x = v[i] + min(solve(v,i+2,j),solve(v,i+1,j-1));
+//   int y = v[j] + min(solve(v,i,j-2),solve(v,i+1,j-1));
+//   return dp[i][j] = max(x,y);
+// }
+ 
+// third approach 
+// first player tries to maximize and second player is minimizing 
+// score1 - score2
+// if 2st take a[i] then f(i+1,j) remain so, seocnd will subtract whatever 1st have taken from that 
+// so  first transition is x = a[i] - f(i+1,j) same as for last element a[j] - f(i,j-1)
+// so, the first player will take maximum of both max(x,y)
+int solve(vector<int>&v,int i,int j){
+  if(i > j) return 0;
+  if(i == j) return v[i];
+  else if(dp[i][j] != -1)
+    return dp[i][j];
+ 
+  int x = v[i] - solve(v,i+1,j);
+  int y = v[j] - solve(v,i,j-1);
+  return  dp[i][j] = max(x,y);
+}
+signed main(){
+  int n; cin>>n;
+  vector<int> v(n,0);
+ 
+  int s = 0;
+  for(int i=0; i<n; i++){
+    cin>>v[i];
+    s += v[i];
+  }
+ 
+  dp.assign(n+1,vector<int>(n+1,-1));
+  int ans = solve(v,0,n-1);
+  cout<< (s + ans)/2;
+  return 0;
+}
+
