@@ -1,0 +1,65 @@
+  // https://cses.fi/problemset/task/1639
+  
+
+//delete ith characte                     : n - 1, m 
+//insert a character at ith position in b : n , m - 1
+// replace a character                    : n - 1, m - 1
+  
+
+#include<bits/stdc++.h>
+using namespace std;
+ 
+const int inf = 1e9 + 7;
+vector<vector<int>> dp;
+int min_val(int a,int b,int c){
+  return min(min(a,b),c);
+}
+int solve(string &s,string &t,int n,int m){
+  if(n==0) return m;
+  if(m==0) return n;
+  if(dp[n][m] != -1) return dp[n][m];
+ 
+  int ans = inf;
+  if(s[n-1]==t[m-1]){
+    ans =  solve(s,t,n-1,m-1);
+  }
+  else{
+    int x = 1 + solve(s,t,n-1,m-1); // n-1,m-1 // replace
+    int y = 1 + solve(s,t,n-1,m);  // delete ith character in a
+    int z = 1 + solve(s,t,n,m-1);  // insert a character in b 
+ 
+    ans = min_val(x,y,z);
+  }
+ 
+  return dp[n][m] = ans;
+}
+int main(){
+  string s,t; cin>>s>>t;
+  int n = s.size(), m = t.size();
+  // dp.assign(n+1,vector<int>(m+1,-1));
+ 
+  // int ans = solve(s,t,n,m);
+  
+  
+    // buttom up approach
+  vector<vector<int>> dp(n+1,vector<int>(m+1,0));
+  for(int i=0; i<=n; i++){
+    for(int j=0; j<=m; j++){
+      if(i==0) dp[i][j] = j;
+      else if(j==0) dp[i][j] = i;
+      else if(s[i-1] == t[j-1]){
+        dp[i][j] = dp[i-1][j-1];
+      }
+      else{
+        dp[i][j] = min_val(dp[i-1][j-1] + 1,dp[i-1][j] + 1,dp[i][j-1] + 1);
+      }
+    }
+  }
+ 
+  int ans = dp[n][m];
+  cout<<ans;
+ 
+  return 0;
+}
+
+
