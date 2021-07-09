@@ -1,0 +1,87 @@
+/*
+ auther : vicky kumar 
+ date : 10/07/2021
+ problem : https://cses.fi/problemset/task/2413/
+*/
+
+
+#include<bits/stdc++.h>
+#define int long long int
+using namespace std;
+
+                                     // _  _
+// dp[i][1] = last blocks are separate | || |
+//                                   _ _
+// dp[i][2] = last blocks are fused |   |
+
+// transition:
+//              _  _    _  _    _  _    _  _     _ _
+//  _  _       | || |  |_|| |  | ||_|  |_||_|   |_ _|
+// | || | =>   | || |, | || |, | || |, | || |,  | | |
+//              _ _    _ _    _ _ 
+//  _ _        |   |  |_|_|  |_ _|
+// |   |  =>   |   |, |   |, |   |
+
+// dp[i][1] = dp[i-1][1]*4 + dp[i-1][2]
+// dp[i][2] = dp[i-1][1] + dp[i-1][2]*2
+
+
+
+
+   // recursion + memoization 
+const int mod = 1e9 + 7;
+// vector<vector<int>> dp;
+// int solve(int i,int st,int n){
+//   if(i==n) return 1;
+//   if(dp[i][st] != -1)
+//     return dp[i][st];
+
+//   int ans = 0;
+//   int x = solve(i+1,1,n);
+//   int y = solve(i+1,2,n);
+//   if(st == 1){
+//     ans = (4 * x + y) %mod;
+//   }
+//   else{
+//     ans = (x + 2 * y) %mod;
+//   }
+
+//   return dp[i][st] = ans;
+// }
+void test_case(){
+  int n; cin>>n;
+
+  // dp.clear();
+  // dp.assign(n+5,vector<int>(4,-1));
+  // int x = solve(1,1,n);
+  // dp.clear();
+  // dp.assign(n+5,vector<int>(4,-1));
+  // int y = solve(1,2,n);
+
+  // int ans = (x + y) %mod;
+  // cout<<ans;
+
+
+
+
+  int dp[n+1][3];
+  memset(dp,0,sizeof(dp));
+  
+  dp[1][1] = dp[1][2] = 1;
+  for(int i=2; i<=n; i++){
+    dp[i][1] = (dp[i-1][1]*4 + dp[i-1][2]) %mod;
+    dp[i][2] = (dp[i-1][1] + dp[i-1][2]*2) %mod;
+  }
+  int x = (dp[n][1] + dp[n][2])%mod;
+  cout<<x;
+}
+signed main(){
+  int t; cin>>t;
+  while(t --){
+    test_case();
+    cout<<"\n";
+  }
+
+  return 0;
+}
+
