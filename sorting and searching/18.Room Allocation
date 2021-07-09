@@ -1,0 +1,82 @@
+/*
+ auther : vicky kumar
+ date : 10/07/2021
+ problem : https://cses.fi/problemset/task/1164
+ 
+*/
+
+
+
+#include<bits/stdc++.h> 
+#define int long long
+#define vi vector<int>
+#define vii vector<vi>
+// #define pii pair<int,int>
+#define rep(i,a,b) for(int i=a; i<b; i++)
+#define rrep(i,a,b) for(int i=a; i>=b; i--)
+#define pb(i) push_back(i)
+#define all(b) b.begin(),b.end()
+ 
+// #include <ext/pb_ds/assoc_container.hpp>
+// #include <ext/pb_ds/tree_policy.hpp>
+// using namespace __gnu_pbds;
+using namespace std;
+// template<class T> using oset =tree<T, null_type, less<T>, rb_tree_tag,tree_order_statistics_node_update> ;
+// // st.find_by_order(k);
+// st.find_of_key(k);
+const int mod = 1e9 + 7;
+const int inf = 1e10 + 20;
+void test_case(){
+   int n; cin>>n;
+   vii a(n,vi(3,0));
+   rep(i,0,n){
+    cin>>a[i][0]>>a[i][1];
+    a[i][2] = i;
+   }
+ 
+   sort(all(a));
+   using pii = pair<int,int> ;
+   priority_queue<pii,vector<pii>,greater<pii>> q;
+ 
+   int rooms = 0, last_room = 0;
+   vi res(n,0);
+   rep(i,0,n){
+    if(q.size()==0){
+        res[a[i][2]] = ++last_room;
+        q.push({a[i][1],last_room});
+    }
+    else{
+        int x,y;
+        tie(x,y) = q.top();
+        if(x < a[i][0]){
+            res[a[i][2]] = y;
+            q.pop();
+            q.push({a[i][1], y});
+        }
+        else{
+            last_room++;
+            res[a[i][2]] = last_room;
+            q.push({a[i][1], last_room});
+        }
+    rooms = max(rooms, (int)q.size());
+    }
+   }
+ 
+   cout<<rooms<<endl;
+   rep(i,0,n){
+    cout<<res[i]<<" ";
+   }
+ 
+}
+ signed main(){
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
+ 
+    int t = 1;  //cin>>t;
+    while(t--){
+        test_case();
+        cout<<'\n';
+    }
+    return 0;
+}
