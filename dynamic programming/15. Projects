@@ -1,0 +1,48 @@
+
+ //https://cses.fi/problemset/task/1140
+
+
+#include<bits/stdc++.h>
+#define int long long
+using namespace std;
+ 
+ 
+vector<int> dp;
+int solve(vector<pair<int,int>> &v,vector<int>&cost,int pos){
+  if(pos >= v.size()) 
+    return 0;
+  else if(dp[pos] != -1)
+    return dp[pos];
+ 
+  pair<int,int> p = {v[pos].second + 1,0};
+  int next = lower_bound(begin(v),end(v),p) - begin(v);
+  int x = solve(v,cost,pos+1);
+  int y = cost[pos] + solve(v,cost,next);
+  return dp[pos] = max(x,y);
+}
+signed main(){
+  int n; cin>>n;
+  vector<vector<int>> v(n,vector<int>(3,0));
+  for(int i=0; i<n; i++){
+    for(int j=0; j<3; j++){
+      cin>>v[i][j];
+    }
+  }
+  sort(begin(v),end(v),[&](vector<int>&x,vector<int>&y){
+    if(x[0] == y[0]) return x[1] < y[1];
+    return x[0] < y[0];
+  });
+  vector<pair<int,int>> p(n);
+  vector<int> cost(n);
+ 
+  for(int i=0; i<v.size(); i++){
+    p[i].first = v[i][0], p[i].second = v[i][1];
+    cost[i] = v[i][2];
+  }
+ 
+  dp.assign(n+1,-1);
+  int ans = solve(p,cost,0);
+  cout<<ans;
+ 
+  return 0;
+}
