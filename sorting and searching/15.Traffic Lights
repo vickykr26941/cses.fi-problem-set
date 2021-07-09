@@ -1,0 +1,60 @@
+/*
+  auther : vicky kumar 
+  date : 10/07/2021
+  problem : https://cses.fi/problemset/task/1163
+*/
+
+#include<bits/stdc++.h> 
+#define int long long
+#define vi vector<int>
+#define vii vector<vi>
+#define pii pair<int,int>
+#define rep(i,a,b) for(int i=a; i<b; i++)
+#define rrep(i,a,b) for(int i=a; i>=b; i--)
+#define pb(i) push_back(i)
+#define all(b) b.begin(),b.end()
+using namespace std;
+const int mod = 1e9 + 7;
+const int inf = 1e10 + 20;
+void test_case(){
+    int x,n; cin>>x>>n;
+    vi a(n,0);
+    rep(i,0,n){
+        cin>>a[i];
+    }
+    set<int> s;
+    multiset<int> t;
+ 
+    s.insert(0);
+    s.insert(x);
+    t.insert(x);
+ 
+    rep(i,0,n){
+        auto it = s.lower_bound(a[i]);
+        auto it2 = it;
+        it2--;
+        // cout<<*it<<" "<<*it2<<endl;
+        t.erase(t.find(*it - *it2));
+        t.insert(*it - a[i]);
+        t.insert(a[i] - *it2);
+ 
+        cout<<*--end(t)<<" ";
+        s.insert(a[i]);
+    }
+ 
+}
+ signed main(){
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
+ 
+ 
+    int t = 1;  //cin>>t;
+    while(t--){
+        test_case();
+        cout<<'\n';
+    }
+    return 0;
+}
+
+
