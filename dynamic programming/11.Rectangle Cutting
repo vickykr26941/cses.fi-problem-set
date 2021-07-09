@@ -1,0 +1,59 @@
+// https://cses.fi/problemset/task/1744
+
+
+#include<bits/stdc++.h>
+using namespace std;
+ 
+const int inf = 1e9 + 7;
+ 
+int dp[505][505];
+int solve(int n,int m){
+  if(n < 0 or m < 0) return inf;
+  if(n==m) return 0;
+  else if(n<=0 or m<=0) return 0;
+  else if(dp[n][m] != -1)
+    return dp[n][m];
+ 
+  int ans = inf;
+  // cout<<"ERROR"<<endl;
+  for(int k=1; k<m; k++){
+    ans = min(ans, 1 + solve(n,k) + solve(n,m-k));
+  }
+  for(int k=1; k<n; k++){
+    ans = min(ans,1 + solve(k,m) + solve(n-k,m));
+  }
+  return dp[n][m] = ans;
+}
+ 
+ 
+int main(){
+  int n,m; cin>>n>>m;
+ 
+  // memset(dp,-1,sizeof dp);
+  // int ans = solve(n,m);
+  
+  
+  // buttom up approach
+  for(int i=0; i<=n; i++){
+    for(int j=0; j<=m; j++){
+      if(i==j)
+        dp[i][j] = 0;
+      else{
+        dp[i][j] = inf;
+ 
+           // cut horizontal
+        for(int k=1; k<i; k++){
+          dp[i][j] = min(dp[i][j],dp[i-k][j] + dp[k][j] + 1);
+        }
+        for(int k=1; k<j; k++){
+          dp[i][j] = min(dp[i][j],dp[i][k] + dp[i][j-k] + 1);
+        }
+      }
+    }
+  }
+ 
+  int ans = dp[n][m];
+  cout<<ans;
+ 
+  return 0;
+}
