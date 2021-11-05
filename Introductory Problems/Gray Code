@@ -1,0 +1,43 @@
+https://cses.fi/problemset/task/2205
+
+#include<bits/stdc++.h>
+#define ll long long
+#define vi vector<int>
+#define vii vector<vector<int>>
+#define vl vector<ll>
+#define pb(i) push_back(i)
+using namespace std;
+string to_binary_string(int n,int maxn){
+	string res;
+	int size = maxn;
+	//int size = log2(maxn) + 1;
+	while(n>0){
+		if(n&1){
+			res +="1";
+		}else{
+			res +="0";
+		}
+		n>>=1;
+	}
+	if(res.size()<size){
+		int remain = size - res.size();
+		for(int i=0; i<remain; i++){
+			res+="0";
+		}
+	}
+ 
+	int i=0,j = res.size()-1;
+	while(i<j){
+		swap(res[i],res[j]);
+		i++,j--;
+	}
+	return res;
+}
+int main(){
+	int n; cin>>n;
+	for(int i=0; i<(1<<n); i++){
+		int bin = (i^(i>>1));
+		cout<<to_binary_string(bin,n)<<endl;
+	}
+	return 0;
+}
