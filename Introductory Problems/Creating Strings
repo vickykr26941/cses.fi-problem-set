@@ -1,0 +1,45 @@
+https://cses.fi/problemset/task/1622
+
+
+#include<bits/stdc++.h>
+#define ll long long
+#define vi vector<int>
+#define vii vector<vector<int>>
+#define vl vector<ll>
+#define pb(i) push_back(i)
+using namespace std;
+vector<bool> vis;
+vector<string> res;
+void solve(string s,int n,string str){
+	if(str.size()==s.size()){
+		res.push_back(str);
+		return;
+	}else{
+		for(int i=0; i<n; i++){
+			if(!vis[i]){
+				vis[i] = true;
+				str+=s[i];
+				solve(s,n,str);
+				vis[i] = false;
+				str.pop_back();
+				while(i<n-1 && s[i]==s[i+1]) i++;
+			}
+		}
+	}
+}
+int main(){
+	string s;
+	cin>>s;
+	vis.assign(s.size(),false);
+	sort(begin(s),end(s));
+	solve(s,s.size(),"");
+	
+	
+	sort(begin(res),end(res));
+	cout<<res.size()<<endl;
+	for(int i=0; i<res.size(); i++){
+		cout<<res[i]<<endl;
+	}
+	
+	return 0;
+}
