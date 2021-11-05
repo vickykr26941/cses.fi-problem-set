@@ -1,0 +1,22 @@
+https://cses.fi/problemset/task/1618
+
+
+#include<bits/stdc++.h>
+#define ll long long
+#define vi vector<int>
+#define vii vector<vector<int>>
+#define vl vector<ll>
+#define pb(i) push_back(i)
+const ll mod = 1e9+7;
+using namespace std;
+int main(){
+	ll n; cin>>n;
+	int res = 0;
+	ll i;
+	for(i=5; i<=n; i=i*5){
+		res += n/i;
+		//cout<<res<< " "<<i<<endl;
+	}
+	cout<<res;
+	return 0;
+}
