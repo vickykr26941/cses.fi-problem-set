@@ -1,0 +1,28 @@
+https://cses.fi/problemset/task/1069
+
+
+#include<bits/stdc++.h>
+#define ll long long
+#define vi vector<int>
+#define vii vector<vector<int>>
+#define vl vector<ll>
+#define pb(i) push_back(i)
+using namespace std;
+int main(){
+	string s;
+	cin>>s;
+	int res = 1, ans = 0;
+	
+	for(int i=1; i<s.size(); i++){
+		if(s[i]==s[i-1]){
+			res++;
+		}
+		else{
+			ans = max(ans,res);
+			res = 1;
+		}
+	}
+	ans = max(ans,res);
+	cout<<ans;
+	return 0;
+}
