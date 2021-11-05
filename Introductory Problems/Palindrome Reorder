@@ -1,0 +1,80 @@
+https://cses.fi/problemset/task/1755
+
+
+#include<bits/stdc++.h> 
+#define int long long
+#define vi vector<int>
+#define vii vector<vi>
+#define pii pair<int,int>
+#define rep(i,a,b) for(int i=a; i<b; i++)
+#define rrep(i,a,b) for(int i=a; i>=b; i--)
+#define pb(i) push_back(i)
+#define all(b) b.begin(),b.end()
+using namespace std;
+const int mod = 1e9 + 7;
+const int inf = 1e10 + 20;
+void test_case(){
+    string s; cin>>s;
+ 
+    int n = s.size();
+    if(n==1){
+        cout<<s;
+        return;
+    }
+    vi cnt(26, 0);
+    rep(i,0,n){
+        cnt[s[i] - 'A'] ++;
+    }
+    int val = 0;
+    rep(i,0,26){
+        // cout<<cnt[i]<<" ";
+        if(cnt[i]%2==1)
+            val++;
+    }
+    // cout<<val;
+    if(val > 1){
+        cout<<"NO SOLUTION";
+        return ;
+    }
+    string res;
+    res.resize(n);
+    char ch = '#';
+    int i = 0, j = n - 1, k = 0;
+    while(i < j){
+        rep(k,0,26){
+            if(cnt[k] % 2 == 1){
+                ch = k + 'A';
+                cnt[k]--;
+                while(cnt[k] > 0){
+                    res[i++] = char(k + 'A'); cnt[k]--;
+                    res[j--] = char(k + 'A'); cnt[k]--;
+                }
+            }
+            else{
+                while(cnt[k] > 0){
+                    res[i++] = char(k + 'A'); cnt[k]--;
+                    res[j--] = char(k + 'A'); cnt[k]--;
+                }
+            }
+        }
+    }
+ 
+    if(ch !='#'){
+        res[n/2] = ch;
+    }
+ 
+    cout<<res;
+}
+ signed main(){
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
+ 
+ 
+    int t = 1;  //cin>>t;
+    while(t--){
+        test_case();
+        cout<<'\n';
+    }
+    return 0;
+}
