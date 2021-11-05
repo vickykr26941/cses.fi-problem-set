@@ -1,0 +1,65 @@
+https://cses.fi/problemset/task/1092
+
+#include<bits/stdc++.h>
+typedef long long ll;
+using namespace  std;
+int main(){
+	ll n; cin>>n;
+	ll s = (n * (n + 1))/2;
+	if(s%2==1){
+		cout<<"NO";
+	}else{
+		cout<<"YES"<<endl;
+		if(n%2==0){ // if n is even 
+			int turn = 0;
+			vector<int> v1,v2;
+			int  i = 1, j = n;
+			while(i<j){
+				if(!turn){
+					v1.push_back(i);
+					v1.push_back(j);
+					i++,j--;
+					turn ^= 1;
+				}
+				if(turn){
+                   v2.push_back(i);
+                   v2.push_back(j);
+                   i++,j--;
+                   turn ^= 1;
+				}
+			}
+ 
+			cout<<v1.size()<<endl;
+			for(int i=0; i<n/2; i++)
+				cout<<v1[i]<<" ";
+			cout<<endl;
+			cout<<v2.size()<<endl;
+			for(int i=0; i<n/2; i++)
+				cout<<v2[i]<<" ";
+		}
+		else{
+             // if n is odd
+			ll rem = s/2;
+			vector<int> v1,v2;
+			for(int i=n; i>=1; i--){
+				if(rem>=i){
+					v1.push_back(i);
+					rem -=i;
+				}
+				else{
+					v2.push_back(i);
+				}
+			}
+		cout<<v1.size()<<endl;
+		for(int i=0; i<v1.size(); i++)
+			cout<<v1[i]<<" ";
+		cout<<endl;
+		cout<<v2.size()<<endl;
+		for(int i=0; i<v2.size(); i++)
+			cout<<v2[i]<<" ";
+	}
+ 
+	}
+ 
+	return 0;
+}
